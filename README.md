@@ -4,8 +4,18 @@ node-nmj
 Network Media Jukebox Manager
 
 
+requirements
+============
+nodejs
+npm
+
 setup
 ==========
+
+```cli
+npm install
+bower install
+```
 
 Make a copy of `config.json-dist` and name it `config.json`, put the file in the same folder.
 
