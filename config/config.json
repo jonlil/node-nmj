@@ -1,0 +1,11 @@
+{
+	"imageserver": {
+		"port": 7000,
+		"hostname": "http://nas-c1-8b-9a",
+		"mediaPath": "/media"
+	},
+	"webserver": {
+		"port": 4000
+	},
+	"db": "/Volumes/media/nmj_database/media.db"
+}

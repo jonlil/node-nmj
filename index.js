@@ -1,15 +1,21 @@
 var express = require('express');
 var app = express();
+
+
+
+app['config'] = require('./config/config.json');
+
 var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('/Volumes/media/nmj_database/media.db', sqlite3.OPEN_READWRITE, function () {
+app['db'] = new sqlite3.Database(app.config.db, sqlite3.OPEN_READWRITE, function () {
     console.log(arguments);
 });
-db.on('error', console.log);
-var basePath = '/Volumes/media';
-var dbPath = '/nmj_database/media.db';
 
-app['db'] = db;
 app.configure(function () {
+    this.use(function (req, res, next) {
+        res.locals.imageserver = app.config.imageserver.hostname + ":" + (app.config.imageserver.port || 80);
+        next();
+    });
+
     this.use(express.favicon());
     this.use(express.cookieParser());
     this.use(express.json());
@@ -23,33 +29,5 @@ app.configure(function () {
 
 require('./routes')(app);
 
-app.get('/tables', function (req, res) {
-    db.all("SELECT name FROM sqlite_master WHERE type='table'", function () {
-        return res.send(200, arguments[1]);
-    })
-});
 
-app.get('/SHOW_GROUPS_SHOWS', function (req, res, next) {
-    db.all('SELECT * FROM SHOW_GROUPS_SHOWS', function (err, groups) {
-        return res.send(200, groups);
-    });
-});
-
-app.get('/table/:name', function (req, res, next) {
-    db.all("SELECT * FROM " + req.params.name + " WHERE ID = '13'", function (err, videos) {
-        return res.send(200, videos);
-    })
-})
-
-app.get('/VIDEO_POSTERS', function (req, res, next) {
-    
-    db.all("SELECT * FROM VIDEO_POSTERS", function (err, shows) {
-        if (err) return next(err);
-        return res.send(200, shows);
-    })
-});
-
-
-
-
-app.listen(4000);
+app.listen(app.config.webserver.port);

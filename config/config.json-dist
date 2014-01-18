@@ -1,0 +1,11 @@
+{
+	"imageserver": {
+		"port": 7000,
+		"hostname": "http://somehostname",
+		"mediaPath": "/media"
+	},
+	"webserver": {
+		"port": 4000
+	},
+	"db": "/Volumes/media/nmj_database/media.db"
+}
