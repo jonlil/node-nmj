@@ -1,0 +1,17 @@
+extends ../base
+
+block body
+	.row(ng-controller="ShowController")
+		.large-12.columns
+			h3.subheader {{object.show.TITLE}}
+
+		.large-12.columns: img(ng-src="http://nas-c1-8b-9a:7000/{{ object.poster.WALLPAPER || object.poster.POSTER }}")
+		.large-12.columns: h3.subheader Seasons
+		.large-12.columns: hr
+		.large-12.columns(ng-repeat="season in object.seasons")
+			.row
+				.medium-3.columns
+					a(ng-href="/shows/{{ object.show.ID }}/seasons/{{ season.SEASON }}") Season {{ season.SEASON }}
+				.medium-9.columns
+					| Episodes {{ season.EPISODES }}
+				hr

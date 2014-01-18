@@ -1,0 +1,26 @@
+doctype html
+html.no-js(lang='en')
+head
+	meta(charset='utf-8')
+	meta(name='viewport', content='width=device-width, initial-scale=1.0')
+	title Network Media Jukebox Browser
+
+	link(rel='stylesheet', href='/css/app.css')
+	script(src='/components/modernizr/modernizr.js')
+
+body(ng-app="NMJBrowser")
+	.row
+		.large-12.columns
+			h3 Network Media Jukebox
+			hr
+
+	block body
+		
+
+	script(src='/components/foundation/js/vendor/jquery.js')
+	script(src='/components/foundation/js/foundation.min.js')
+	script(src='/components/lodash/dist/lodash.min.js')
+	script(src='/components/angular/angular.js')
+	script(src='/js/app.js')
+	script.
+		$(document).foundation();

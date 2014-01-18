@@ -1,0 +1,22 @@
+{
+  "name": "Network Media Jukebox",
+  "version": "0.0.0",
+  "authors": [
+    "Jonas Liljestrand <jonas.liljestrand@gmail.com>"
+  ],
+  "license": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "lodash": "~2.4.1",
+    "foundation": "~5.0.3",
+    "angular": "~1.2.9"
+  }
+}

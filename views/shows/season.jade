@@ -1,0 +1,19 @@
+extends ../base
+
+
+block body
+	.row(ng-controller="ShowSeasonController")
+		.large-12.columns
+			h3.subheader {{object.show.TITLE}} 
+			h5.subheader Season {{ object.episodes[0].SEASON }}
+
+		
+		.large-12.columns(ng-repeat="episode in object.episodes")
+			form(ng-submit="updateEpisode(episode)")
+				.row
+					.large-4.columns
+						label.right.inline Episode {{episode.EPISODE}}
+					.large-8.columns
+						.row.collapse
+							.large-10.columns: input(type="text", ng-model="episode.TITLE")
+							.large-2.columns: button(type="submit").postfix.button.success.radius.small Update
