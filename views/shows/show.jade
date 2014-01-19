@@ -10,8 +10,8 @@ block body
 		.large-12.columns: hr
 		.large-12.columns(ng-repeat="season in object.seasons")
 			.row
-				.medium-3.columns
+				.small-6.columns
 					a(ng-href="/shows/{{ object.show.ID }}/seasons/{{ season.SEASON }}") Season {{ season.SEASON }}
-				.medium-9.columns
+				.small-6.columns
 					| Episodes {{ season.EPISODES }}
 				hr
