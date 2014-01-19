@@ -12,6 +12,7 @@ block body
 			form(ng-submit="updateEpisode(episode)")
 				
 				.row.collapse
-					.small-2.columns: span.prefix S{{ episode.SEASON }}E{{ episode.EPISODE }}
+					.small-2.columns: span.prefix.radius
+						a(ng-href="/shows/{{ object.show.ID }}/seasons/{{ episode.SEASON }}/episode_id/{{episode.EPISODE_ID}}") S{{ episode.SEASON }}E{{ episode.EPISODE }}
 					.small-8.columns: input(type="text", ng-model="episode.TITLE")
 					.small-2.columns: button(type="submit").postfix.button.success.radius.small Update

@@ -6,12 +6,18 @@ block body
 			h3.subheader {{object.show.TITLE}}
 
 		.large-12.columns: img(ng-src="#{ imageserver }/{{ object.poster.WALLPAPER || object.poster.POSTER }}")
-		.large-12.columns: h3.subheader Seasons
+
 		.large-12.columns: hr
-		.large-12.columns(ng-repeat="season in object.seasons")
-			.row
-				.small-6.columns
-					a(ng-href="/shows/{{ object.show.ID }}/seasons/{{ season.SEASON }}") Season {{ season.SEASON }}
-				.small-6.columns
-					| Episodes {{ season.EPISODES }}
-				hr
+
+		.large-12.columns
+			table.large-12
+				thead
+					th Season
+					th Episodes
+					th
+				tbody
+					tr(ng-repeat="season in object.seasons")
+						td {{ season.SEASON }}
+						td Episodes {{ season.EPISODES }}
+						td: a(ng-href="/shows/{{ object.show.ID }}/seasons/{{ season.SEASON }}").button.tiny.radius.rounded view
+		

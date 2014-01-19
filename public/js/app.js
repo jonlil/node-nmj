@@ -25,6 +25,28 @@ app.controller('MainIndexController', [
 	}
 ])
 
+.controller('EpisodeController', [
+	'$scope',
+	'$http',
+
+	function ($scope, $http) {
+		
+		var url = '/api' + window.location.pathname;
+
+		$http.get(url)
+			.success(function (data) {
+				$scope.object = data;
+			});
+
+		$scope['delete'] = function (episode_id) {
+			$http.delete('/api/episodes/' + episode_id)
+				.success(function (data) {
+
+				});
+		};
+	}
+])
+
 .controller('ShowSeasonController', [
 	'$scope',
 	'$http',

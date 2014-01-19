@@ -1,0 +1,36 @@
+extends ../base
+
+block body
+	.row(ng-controller="EpisodeController")
+		
+		.large-12.columns
+			//-button.alert(type="submit", ng-click="delete(object.episode.EPISODE_ID)").radius Delete
+			table.large-12.small-12
+				thead
+					tr
+						th(colspan="2"): h4 Episode
+				tbody
+					tr
+						td.large-2.small-3 Title
+						td.large-9.small-9 {{ object.episode.TITLE }}
+
+			table.large-12.small-12
+				thead
+					tr
+						th(colspan="2"): h4 Video
+				tbody
+					tr
+						td.large-2.small-2 Video Path
+						td.large-9.small-9 {{ object.video.PATH }}
+					tr
+						td Resolution
+						td {{ object.video.properties.RESOLUTION }}
+					tr
+						td Video codec
+						td {{ object.video.properties.VIDEO_CODEC }}
+					tr
+						td Aspect ratio
+						td {{ object.video.properties.ASPECT_RATIO }}
+					tr
+						td FPS
+						td {{ object.video.properties.FPS }}

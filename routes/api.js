@@ -9,6 +9,49 @@ module.exports = function (app) {
 	function getSynopsises (id, cb) {
 		return app.db.get("SELECT * FROM SYNOPSISES WHERE ID = '" + id+ "'", cb);
 	}
+	app.get('/api/shows/:id/seasons/:season/episode_id/:episode_id', function (req, res, next) {
+		
+		async.waterfall([
+			function (cb) {
+				return app.db.get("SELECT e.*, s.* FROM EPISODES as e \
+					INNER JOIN SHOWS as s ON (s.ID = e.EPISODE_ID) \
+				 	WHERE e.EPISODE_ID = $episode_id", 
+				 	{ $episode_id: req.params.episode_id }, 
+				 	function (err, episode) {
+						if (err) return cb(err);
+						if (!episode) return cb(new Error('No episode found'));
+						return cb(null, episode);
+					}
+				);
+			},
+			function (episode, cb) {
+				return app.db.get('SELECT v.* FROM SHOWS_VIDEOS as sv \
+					INNER JOIN VIDEOS AS v ON (v.ID = sv.VIDEOS_ID) \
+					WHERE sv.SHOWS_ID = $id', 
+					{ $id: episode.EPISODE_ID }, 
+					function (err, video) {
+						if (err) return cb(err);
+						if (!video) return cb(new Error('No video found'));
+
+						return cb(null, episode, video);
+					}
+				);
+			},
+			function (episode, video, cb) {
+				return app.db.get('SELECT * FROM VIDEO_PROPERTIES WHERE ID = $id', 
+					{ $id: video.ID }, 
+					function (err, properties){
+						video.properties = properties;
+
+						cb(null, { video: video, episode: episode });
+					}
+				);
+			}
+		],
+		function (err, results) {
+			return res.send(200, results);		
+		});
+	});
 
 	app.put('/api/shows/:id/seasons/:season/episodes/:episode', function (req, res, next) {
 		if (req.body.EPISODE != req.params.episode) {
@@ -44,6 +87,21 @@ module.exports = function (app) {
 			return res.send(200, results);
 		})
 		
+	});
+
+	app.delete('/api/episodes/:id', function (req, res, next) {
+		app.db.get('SELECT v.* FROM SHOWS_VIDEOS as sv \
+			INNER JOIN VIDEOS AS v ON (v.ID = sv.VIDEOS_ID) \
+			WHERE sv.SHOWS_ID = $id', 
+			{ $id: req.params.id }, 
+			function (err, video) {
+				if (err) return next(err);
+				if (!video) {
+					return res.send(404);
+				}		
+				console.log(video);
+				return res.send(200);
+			});
 	});
 
 	app.get('/api/shows/:id', function (req, res, next) {
