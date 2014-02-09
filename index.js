@@ -24,6 +24,11 @@ app.configure(function () {
     this.use(express.logger('dev'));
 	this.use(express.static(__dirname + '/public'));
 	this.engine('jade', require('jade').__express);
+    // Remove if-none-match headers to prevent 304 responses from API.
+    this.use(function(req, res, next){
+        req.headers['if-none-match'] = 'no-match-for-this';
+        next();
+    });
 	this.use(app.router);
 });
 
